@@ -50,23 +50,28 @@ export default function Agendalist() {
 
   useEffect(() => {
     setIsLoading(true);
-    try {
-      const getEvents = async () => {
+    const getEvents = async () => {
+      try {
         const events = await getAllEvents();
-        if (events === undefined) {
+        if (events === undefined || !Array.isArray(events)) {
           setHttpError(true);
+          dispatch(setEvent([]));
         } else {
           dispatch(setEvent(events));
         }
-      };
-      setTimeout(() => {
-        getEvents();
+      } catch (error) {
+        console.log(error);
+        setHttpError(true);
+        dispatch(setEvent([]));
+      } finally {
         setIsLoading(false);
-      }, 2000);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+      }
+    };
+    
+    setTimeout(() => {
+      getEvents();
+    }, 2000);
+  }, [dispatch]);
 
   
   return (
