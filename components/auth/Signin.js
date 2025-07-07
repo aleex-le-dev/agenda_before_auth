@@ -2,7 +2,7 @@ import AuthForm from "./AuthForm";
 import { useState } from "react";
 import { login } from "../../lib";
 import { useDispatch } from "react-redux";
-import { setIsSignedIn } from "../../store/slices/userSlice";
+import { setIsSignedIn } from "../../store/slices/authSlice";
 
 export default function Signin({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
