@@ -20,6 +20,7 @@ export default function Signup({ navigation }) {
       });
       console.log(user);
       dispatch(setIsSignedIn(true));
+      dispatch(setToken(user.idToken));
     } catch (error) {
       console.log(error);
     } finally {
