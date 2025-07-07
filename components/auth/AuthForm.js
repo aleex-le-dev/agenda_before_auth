@@ -3,8 +3,9 @@ import { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { colors } from "../../constants/colors";
 import CustomBtn from "../modal/CustomBtn";
+import ErrorModal from "../modal/ErrorModal";
 
-export default function AuthForm({  
+export default function AuthForm({
   navigate,
   submitFormHandler,
   isLoading,
@@ -18,6 +19,12 @@ export default function AuthForm({
   });
 
   const [errorMessages, setErrorMessages] = useState([]);
+
+  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+  const closeErrorModal = () => {
+    setIsErrorModalVisible(false);
+  };
+
 
   const onFormChange = (key, value) => {
     setFormData((previousState) => {
@@ -41,14 +48,6 @@ export default function AuthForm({
         },
       };
     });
-  };
-
-  const onSubmitForm = () => {
-    const data = {
-      email: formData.email.value,
-      password: formData.password.value,
-    };
-    submitFormHandler(data);
   };
 
   const validateBeforeSubmit = () => {
@@ -83,8 +82,18 @@ export default function AuthForm({
 
     if (messages.length) {
       setErrorMessages(messages);
+      setIsErrorModalVisible(true);
     } else {
-      onSubmitForm();
+      const data = {
+        email: formData.email.value.trim(),
+        password: formData.password.value.trim(),
+      };
+      submitFormHandler(data);
+      setFormData({
+        email: { value: "", error: false },
+        password: { value: "", error: false },
+        confirmPassword: { value: "", error: false },
+      });
     }
   };
 
@@ -126,6 +135,27 @@ export default function AuthForm({
           isLoading={isLoading}
         />
       </View>
+
+      {/* switch auth */}
+      <View style={styles.switchAuthContainer}>
+        <Text style={styles.switchAuthText}>
+          {loginScreen
+            ? "Vous n'avez pas de compte ? "
+            : "Vous avez déjà un compte ? "}
+          <Text
+            style={[styles.switchAuthText, styles.textBold]}
+            onPress={navigate}>
+            {loginScreen ? "S'inscrire" : "Se connecter"}
+          </Text>
+        </Text>
+      </View>
+
+      {/* error modal */}
+      <ErrorModal
+        isModalVisible={isErrorModalVisible}
+        closeModal={closeErrorModal}
+        errors={errorMessages}
+      />
     </View>
   );
 }
@@ -150,6 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 32,
+    
   },
   switchAuthText: {
     color: colors.LIGHT,
