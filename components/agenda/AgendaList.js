@@ -15,7 +15,6 @@ import { getAllEvents } from "../../lib";
 import { setEvent } from "../../store/slices/agendaSlice";
 import ErrorOverlay from "../overlay/ErrorOverlay";
 
-
 const Header = ({ openModal }) => (
   <View style={styles.headerContainer}>
     <Text></Text>
@@ -52,28 +51,24 @@ export default function Agendalist() {
 
   useEffect(() => {
     setIsLoading(true);
-    const getEvents = async () => {
-      try {
+    try {
+      const getEvents = async () => {
         const events = await getAllEvents();
-        if (events === undefined || !Array.isArray(events)) {
+        if (events === undefined) {
           setHttpError(true);
-          dispatch(setEvent([]));
         } else {
           dispatch(setEvent(events));
+          setHttpError(false);
         }
-      } catch (error) {
-        console.log(error);
-        setHttpError(true);
-        dispatch(setEvent([]));
-      } finally {
+      };
+      setTimeout(() => {
+        getEvents();
         setIsLoading(false);
-      }
-    };
-
-    setTimeout(() => {
-      getEvents();
-    }, 2000);
-  }, [dispatch]);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <>
