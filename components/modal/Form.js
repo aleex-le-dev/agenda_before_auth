@@ -275,7 +275,6 @@ const Form = ({ isVisible, closeModal, selectedEvent, httpError }) => {
         errors={errorMessages}
       />
       {isLoading ? <LoadingOverlay /> : null}
-      {httpError ? <ErrorOverlay /> : null}
     </Modal>
   );
 };

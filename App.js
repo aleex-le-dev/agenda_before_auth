@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 
-import colors from "./constants/colors";
+import { colors } from "./constants/colors";
 import StackNavigator from "./navigators/StackNavigator";
 
 export default function App() {

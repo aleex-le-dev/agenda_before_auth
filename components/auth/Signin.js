@@ -1,4 +1,4 @@
-import { AuthForm } from "./AuthForm";
+import AuthForm from "./AuthForm";
 import { useState } from "react";
 
 export default function Signin({ navigation }) {

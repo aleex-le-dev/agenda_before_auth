@@ -1,10 +1,10 @@
 import Input from "../modal/Input";
 import { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import colors from "../../constants/colors";
+import { colors } from "../../constants/colors";
 import CustomBtn from "../modal/CustomBtn";
 
-export default function AuthForm({
+export default function AuthForm({  
   navigate,
   submitFormHandler,
   isLoading,

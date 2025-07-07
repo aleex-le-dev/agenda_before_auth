@@ -13,13 +13,15 @@ import { useEffect, useState } from "react";
 import Form from "../modal/Form";
 import { getAllEvents } from "../../lib";
 import { setEvent } from "../../store/slices/agendaSlice";
+import ErrorOverlay from "../overlay/ErrorOverlay";
+
 
 const Header = ({ openModal }) => (
   <View style={styles.headerContainer}>
     <Text></Text>
     <Text style={styles.title}>Agenda</Text>
     <Ionicons
-      name="add-circle"
+      name='add-circle'
       size={32}
       color={colors.PINK}
       onPress={openModal}
@@ -67,19 +69,17 @@ export default function Agendalist() {
         setIsLoading(false);
       }
     };
-    
+
     setTimeout(() => {
       getEvents();
     }, 2000);
   }, [dispatch]);
 
-  
   return (
     <>
       {isLoading ? (
         <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <ActivityIndicator color={colors.WHITE} size={"large"} />
         </View>
       ) : (
@@ -99,6 +99,7 @@ export default function Agendalist() {
         selectedEvent={selectedEvent}
         httpError={httpError}
       />
+      {httpError ? <ErrorOverlay /> : null}
     </>
   );
 }

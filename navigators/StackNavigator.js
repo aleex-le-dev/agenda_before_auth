@@ -19,7 +19,7 @@ export default function StackNavigator() {
         }}>
         <Stack.Screen component={AgendaList} name='Agenda' />
         <Stack.Screen component={Signup} name='Signup' />
-        <Stack.Screen component={Signin} name='signin' />
+        <Stack.Screen component={Signin} name='Signin' />
       </Stack.Navigator>
     </NavigationContainer>
   );
