@@ -7,9 +7,15 @@ export default function Signup({ navigation }) {
   const navigateToSignin = () => {
     navigation.replace("Signin");
   };
+ 
   const submitFormHandler = async (values) => {
+    setIsLoading(true);
     try {
-      const user = await register(values.email, values.password);
+      const user = await register({
+        email: values.email,
+        password: values.password,
+      });
+      console.log(user);
     } catch (error) {
       console.log(error);
     } finally {
