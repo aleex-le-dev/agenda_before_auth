@@ -21,7 +21,7 @@ const Header = ({ openModal }) => (
     <Text style={styles.title}>Agenda</Text>
     <Ionicons
       name='add-circle'
-      size={32}
+      size={32} 
       color={colors.PINK}
       onPress={openModal}
     />
@@ -31,7 +31,7 @@ const Header = ({ openModal }) => (
 export default function Agendalist() {
   const agendaData = useSelector((state) => state.agenda.events);
   const dispatch = useDispatch();
-
+  const token = useSelector((state) => state.auth.idToken);
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [httpError, setHttpError] = useState(false);
@@ -53,7 +53,7 @@ export default function Agendalist() {
     setIsLoading(true);
     try {
       const getEvents = async () => {
-        const events = await getAllEvents();
+        const events = await getAllEvents(token);
         if (events === undefined) {
           setHttpError(true);
         } else {

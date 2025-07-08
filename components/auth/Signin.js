@@ -2,7 +2,7 @@ import AuthForm from "./AuthForm";
 import { useState } from "react";
 import { login } from "../../lib";
 import { useDispatch } from "react-redux";
-import { setIsSignedIn } from "../../store/slices/authSlice";
+import { setIsSignedIn, setToken } from "../../store/slices/authSlice";
 
 export default function Signin({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +19,7 @@ export default function Signin({ navigation }) {
       });
       console.log(user);
       dispatch(setIsSignedIn(true));
+      dispatch(setToken(user.idToken));
     } catch (error) {
       console.log(error);
     } finally {
@@ -27,7 +28,8 @@ export default function Signin({ navigation }) {
   };
 
   return (
-    <AuthForm loginScreen={true}
+    <AuthForm
+      loginScreen={true}
       navigate={navigateToSignup}
       submitFormHandler={submitFormHandler}
       isLoading={isLoading}
