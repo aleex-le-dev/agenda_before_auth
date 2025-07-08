@@ -14,13 +14,16 @@ import Form from "../modal/Form";
 import { getAllEvents } from "../../lib";
 import { setEvent } from "../../store/slices/agendaSlice";
 import ErrorOverlay from "../overlay/ErrorOverlay";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { setIsSignedIn } from "../../store/slices/authSlice";
+import { setToken } from "../../store/slices/authSlice";
 
-const Header = ({ openModal }) => (
+const Header = ({ openModal, logout }) => (
   <View style={styles.headerContainer}>
-    <Text></Text>
+    <AntDesign name='calendar' size={24} color={colors.WHITE} onPress={logout} />
     <Text style={styles.title}>Agenda</Text>
     <Ionicons
-      name='add-circle'
+      name='add-circle' 
       size={32} 
       color={colors.PINK}
       onPress={openModal}
@@ -70,6 +73,11 @@ export default function Agendalist() {
     }
   }, []);
 
+  const logout = () => {
+    dispatch(setIsSignedIn(false));
+    dispatch(setToken(false));
+  };
+
   return (
     <>
       {isLoading ? (
@@ -81,7 +89,7 @@ export default function Agendalist() {
         <FlatList
           data={agendaData}
           ItemSeparatorComponent={<View style={{ height: 24 }} />}
-          ListHeaderComponent={<Header openModal={openModal} />}
+          ListHeaderComponent={<Header openModal={openModal} logout={logout} />}
           renderItem={({ item }) => (
             <ListItem item={item} selectEventHandler={selectEventHandler} />
           )}

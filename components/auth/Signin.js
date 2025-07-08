@@ -3,6 +3,7 @@ import { useState } from "react";
 import { login } from "../../lib";
 import { useDispatch } from "react-redux";
 import { setIsSignedIn, setToken } from "../../store/slices/authSlice";
+import * as SecureStore from "expo-secure-store";
 
 export default function Signin({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +21,7 @@ export default function Signin({ navigation }) {
       console.log(user);
       dispatch(setIsSignedIn(true));
       dispatch(setToken(user.idToken));
+      await SecureStore.setItemAsync("credentials", JSON.stringify(values));
     } catch (error) {
       console.log(error);
     } finally {

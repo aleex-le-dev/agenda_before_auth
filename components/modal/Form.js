@@ -180,7 +180,7 @@ const Form = ({ isVisible, closeModal, selectedEvent, httpError }) => {
 
   const removeEvt = async () => {
     if (event) {
-      await deleteAnEvent({ id: event.id });
+      await deleteAnEvent({ id: event.id }, token);
       dispatch(removeEvent({ id: event.id }));
     }
     closeModal();
